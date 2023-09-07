@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const GroupManager = require("../../logic/group/groupManager.js");
 const utils = require("../../utils/shuffle.js");
+const callFactory = require("../../utils/callFactory.js");
 const { RiotAPI, RiotAPITypes, PlatformId } = require("@fightmegg/riot-api");
 const rAPI = new RiotAPI(process.env.RITO_TOKEN);
 const { DDragon } = require("@fightmegg/riot-api");
@@ -49,25 +50,47 @@ module.exports = {
 
     let champs = (await ddragon.champion.all()).data;
     let selected = utils.shuffle(
-      Object.values(champs).map((champion) => ({ id: champion.id }))
+      Object.values(champs).map((champion) => ({
+        id: champion.id,
+        key: champion.key,
+      }))
     );
+
     selected = selected.slice(0, participants.length * 3);
+    selected = Object.values(selected).map((champion) => ({
+      id: champion.id,
+      key: champion.key,
+      message: "",
+    }));
+    for (const champion of selected) {
+      const seed = await callFactory.getSeedId(champion.key);
+      champion.message =
+        "[" +
+        champion.id +
+        "]" +
+        "(https://www.ultimate-bravery.net/Classic?s=" +
+        seed +
+        ")";
+    }
+
     var halfLenghtChamps = Math.ceil(selected.length / 2);
     var leftSideChamps = selected.slice(0, halfLenghtChamps);
     var rightSideChamps = selected.slice(halfLenghtChamps, selected.length);
 
-    const championNamesLeft = leftSideChamps.map((champion) => champion.id);
+    const championNamesLeft = leftSideChamps.map(
+      (champion) => champion.message
+    );
     const outputStringLeft = championNamesLeft.join(", ");
 
-    const championNamesRight = rightSideChamps.map((champion) => champion.id);
+    const championNamesRight = rightSideChamps.map(
+      (champion) => champion.message
+    );
     const outputStringRight = championNamesRight.join(", ");
-
-    console.log(leftSideChamps);
 
     const retEmbed = new EmbedBuilder()
       .setTitle("🏆 Die Teams sind: 🤙")
       .setDescription(
-        "Hier sind die Teams. Darunter hat jedes Team einen Champion-Pool aus denen das Team picken kann."
+        `Hier sind die Teams. Darunter hat jedes Team einen Champion-Pool aus denen das Team picken kann.`
       )
       .setColor(0x900c3f)
       .setTimestamp(Date.now())

@@ -26,8 +26,8 @@ exports.getScheduleEintracht = (callback) => {
       });
       const openEintrachtMatch = openMatch.filter((event) => {
         return (
-          event.match.teams[0].name == "Eintracht Frankfurt" ||
-          event.match.teams[1].name == "Eintracht Frankfurt"
+          event.match.teams[0]?.name == "Eintracht Frankfurt" ||
+          event.match.teams[1]?.name == "Eintracht Frankfurt"
         );
       });
       callback(openEintrachtMatch);

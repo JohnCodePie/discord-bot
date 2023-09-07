@@ -16,6 +16,10 @@ module.exports = {
     .setDescription("Shows all commands."),
 
   async execute(interaction, client) {
+    return new EmbedBuilder()
+      .setTitle(`No longer Supported`)
+      .setDescription("Ask @Antone")
+      .setColor(0x900c3f);
     esport.getScheduleEintracht(function (eintrachtSchedule) {
       let message = "";
       for (let i = 0; i < Object.keys(eintrachtSchedule).length; i++) {

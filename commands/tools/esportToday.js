@@ -16,6 +16,10 @@ module.exports = {
     .setDescription("Shows esport events today."),
 
   async execute(interaction, client) {
+    return new EmbedBuilder()
+      .setTitle(`No longer Supported`)
+      .setDescription("Ask @Antone")
+      .setColor(0x900c3f);
     esport.getScheduleFavToday(function (eintrachtSchedule) {
       let message = "";
       console.log(eintrachtSchedule);
@@ -25,20 +29,20 @@ module.exports = {
 
         message +=
           "🔥: **" +
-          eintrachtSchedule[i].match.teams[0].name +
+          eintrachtSchedule[i].match.teams[0]?.name +
           "** (W:" +
-          eintrachtSchedule[i].match.teams[0].record.wins +
+          eintrachtSchedule[i].match.teams[0]?.record.wins +
           "/" +
           "L:" +
-          eintrachtSchedule[i].match.teams[0].record.losses +
+          eintrachtSchedule[i].match.teams[0]?.record.losses +
           ") " +
           " *vs.* **" +
-          eintrachtSchedule[i].match.teams[1].name +
+          eintrachtSchedule[i].match.teams[1]?.name +
           "** (W:" +
-          eintrachtSchedule[i].match.teams[1].record.wins +
+          eintrachtSchedule[i].match.teams[1]?.record.wins +
           "/" +
           "L:" +
-          eintrachtSchedule[i].match.teams[1].record.losses +
+          eintrachtSchedule[i].match.teams[1]?.record.losses +
           ") " +
           "  🕒  " +
           convertedTime +

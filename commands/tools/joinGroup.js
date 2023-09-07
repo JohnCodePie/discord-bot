@@ -43,7 +43,6 @@ module.exports = {
     group.addParticipant(name);
     await interaction.reply({
       content: "Du bist der Party beigetreten! 🤙",
-      ephemeral: true,
     });
   },
 };

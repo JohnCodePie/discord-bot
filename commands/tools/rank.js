@@ -11,7 +11,7 @@ module.exports = {
   async execute(interaction, client) {
     const summoner = await rAPI.summoner.getBySummonerName({
       region: PlatformId.EUW1,
-      summonerName: "Fleischi Meischi",
+      summonerName: "Die Motte",
     });
     const rank = await rAPI.league.getEntriesBySummonerId({
       region: PlatformId.EUW1,

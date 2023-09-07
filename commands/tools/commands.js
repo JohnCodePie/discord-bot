@@ -13,8 +13,6 @@ module.exports = {
           `\n⚡ **/join #ID** -> *Um der Party beizutreten.*` +
           `\n⚡ **/displayparty #ID** -> *Um die Teilnehmer der Party zu sehen.*` +
           `\n⚡ **/randomteams #ID** -> *Um mit den Teilnehmern einer Party eine zufällige Teamaufstellung zu generieren. Gleichzeitig werden euch auch zufällige Champs vorgeschlagen.* ` +
-          `\n⚡ **/esporttoday** -> *Um die heutigen Spiele zu sehen.*` +
-          `\n⚡ **/eintracht** -> *Um die upcoming games von Eintracht Frankfurt zu bekommen.*` +
           `\n⚡ **/rank** -> *Um den rank von Matze schnell zu eruieren.*` +
           `\n⚡ **/topdiff** -> *Um die rank difference ziwschen Matze und Lord schnell zu eruieren.*`
       )
