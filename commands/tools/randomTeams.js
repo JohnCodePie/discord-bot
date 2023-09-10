@@ -3,7 +3,7 @@ const GroupManager = require("../../logic/group/groupManager.js");
 const utils = require("../../utils/shuffle.js");
 const callFactory = require("../../utils/callFactory.js");
 const { RiotAPI, RiotAPITypes, PlatformId } = require("@fightmegg/riot-api");
-const rAPI = new RiotAPI(process.env.RITO_TOKEN);
+//const rAPI = new RiotAPI(process.env.RITO_TOKEN);
 const { DDragon } = require("@fightmegg/riot-api");
 
 const ddragon = new DDragon();
