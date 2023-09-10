@@ -26,6 +26,8 @@ module.exports = {
     }
 
     const participants = group.getParticipants();
+    let namesValue = "Gähnende Leere! 😢";
+    if (participants.length > 0) namesValue = participants.join("\n");
 
     const retEmbed = new EmbedBuilder()
       .setTitle(`Infos zur Party! 🤙 #${givenID}`)
@@ -37,7 +39,7 @@ module.exports = {
       .addFields([
         {
           name: `Teilnehmer: [${participants.length}] `,
-          value: participants.toString(),
+          value: namesValue,
           inline: true,
         },
       ]);

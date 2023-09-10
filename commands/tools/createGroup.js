@@ -1,5 +1,8 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const GroupManager = require("../../logic/group/groupManager.js");
+//write a module that creates a new group and returns the id
+//write a module that joins a group by id
+//write a module that displays the participants of a group by id (only the names)
 
 module.exports = {
   data: new SlashCommandBuilder()

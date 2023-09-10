@@ -9,6 +9,17 @@ module.exports = {
     return id;
   },
 
+  //removes specific participant from group by id and name
+  async removeParticipants(id, name) {
+    const group = groups.find((element) => {
+      return element.getId() == id;
+    });
+    if (!group) {
+      return;
+    }
+    group.removeParticipant(name);
+  },
+
   async getGroups() {
     return groups;
   },
