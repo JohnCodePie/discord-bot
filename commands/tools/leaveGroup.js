@@ -16,29 +16,16 @@ module.exports = {
   async execute(interaction, client) {
     const givenID = interaction.options.data[0].value;
     const name = interaction.user.username;
-    const group = await GroupManager.getGroupById(Number(givenID));
-    //check if party exsists
-    if (!group) {
+    try {
+      await GroupManager.removeParticipant(givenID, name);
       await interaction.reply({
-        content: "Diese Party exestiert nicht!",
-        ephemeral: true,
+        content: "Du hast die Party verlassen! 😢",
+      });
+    } catch (error) {
+      await interaction.reply({
+        content: "❌ " + error.toString(),
       });
       return;
     }
-    let participants = group.getParticipants();
-    const found = participants.find((element) => {
-      return element == name;
-    });
-    if (!found) {
-      await interaction.reply({
-        content: "Du bist dieser Party nicht beigetreten!",
-        ephemeral: true,
-      });
-      return;
-    }
-    group.removeParticipant(name);
-    await interaction.reply({
-      content: "Du hast die Party verlassen! 😢",
-    });
   },
 };

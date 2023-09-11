@@ -16,10 +16,15 @@ module.exports = {
     .setDescription("Shows esport events today."),
 
   async execute(interaction, client) {
-    return new EmbedBuilder()
+    const retEmbed = new EmbedBuilder()
       .setTitle(`No longer Supported`)
       .setDescription("Ask @Antone")
       .setColor(0x900c3f);
+
+    interaction.reply({
+      embeds: [retEmbed],
+    });
+
     esport.getScheduleFavToday(function (eintrachtSchedule) {
       let message = "";
       console.log(eintrachtSchedule);

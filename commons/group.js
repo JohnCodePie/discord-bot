@@ -2,12 +2,9 @@ class Group {
   id = 0;
   participants = [];
 
-  constructor() {
-    this.id = Math.floor(Math.random() * 10000);
-  }
-
-  addParticipant(name) {
-    this.participants.push(name);
+  constructor(id, participants) {
+    this.id = id;
+    this.participants = participants;
   }
 
   // removes specific participant from group by name

@@ -11,3 +11,23 @@ model accounts {
   username String @unique @db.VarChar(50)
 }
 
+model users {
+  id           Int            @id @default(autoincrement())
+  name         String         @db.VarChar(50) @unique
+  users_groups users_groups[]
+}
+
+model groups {
+  id           Int            @id @default(autoincrement())
+  users_groups users_groups[]
+}
+
+//to resolve the n:m relationship between users and groups we need a join table that has a composite primary key
+model users_groups {
+  user_id  Int
+  group_id Int
+  users    users  @relation(fields: [user_id], references: [id])
+  groups   groups @relation(fields: [group_id], references: [id])
+
+  @@id([user_id, group_id])
+}
