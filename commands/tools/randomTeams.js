@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const GroupManager = require("../../logic/group/groupManager.js");
 const utils = require("../../utils/shuffle.js");
 const callFactory = require("../../utils/callFactory.js");
+const { arrayToReadableString } = require("../../utils/stringify.js");
 const { RiotAPI, RiotAPITypes, PlatformId } = require("@fightmegg/riot-api");
 //const rAPI = new RiotAPI(process.env.RITO_TOKEN);
 const { DDragon } = require("@fightmegg/riot-api");
@@ -17,10 +18,20 @@ module.exports = {
         .setName("partyid")
         .setDescription("Aus welcher Party die Teilnehmer gemischt werden")
         .setRequired(true)
+    )
+    .addBooleanOption((option) =>
+      option
+        .setName("ultimatebravery")
+        .setDescription(
+          "Sollen die Champions mit Ultimate Bravery Links versehen werden?"
+        )
+        .setRequired(true)
     ),
 
   async execute(interaction, client) {
     const givenID = interaction.options.data[0].value;
+    const ultimateBravery = interaction.options.data[1].value;
+    await interaction.deferReply({ ephemeral: true });
     try {
       const group = await GroupManager.getGroupById(Number(givenID));
 
@@ -28,9 +39,8 @@ module.exports = {
         group.id
       );
 
-      //check if party exsists
       if (participants.length == 0 || participants.length == 1) {
-        await interaction.reply({
+        await interaction.editReply({
           content: `Diese Party hat keine bzw. zu wenige Teilnehmer! Teilnehmer: ${participants.length}/2 `,
           ephemeral: true,
         });
@@ -54,17 +64,20 @@ module.exports = {
       selected = Object.values(selected).map((champion) => ({
         id: champion.id,
         key: champion.key,
-        message: "",
+        message: champion.id,
       }));
-      for (const champion of selected) {
-        const seed = await callFactory.getSeedId(champion.key);
-        champion.message =
-          "[" +
-          champion.id +
-          "]" +
-          "(https://www.ultimate-bravery.net/Classic?s=" +
-          seed +
-          ")";
+
+      if (ultimateBravery) {
+        for (const champion of selected) {
+          const seed = await callFactory.getSeedId(champion.key);
+          champion.message =
+            "[" +
+            champion.id +
+            "]" +
+            "(https://www.ultimate-bravery.net/Classic?s=" +
+            seed +
+            ")";
+        }
       }
 
       var halfLenghtChamps = Math.ceil(selected.length / 2);
@@ -91,21 +104,22 @@ module.exports = {
         .addFields([
           {
             name: "Team 1",
-            value: leftSide.toString() + `\n\n ${outputStringLeft}`,
+            value: arrayToReadableString(leftSide) + `\n\n ${outputStringLeft}`,
             inline: true,
           },
           {
             name: "Team 2",
-            value: rightSide.toString() + `\n\n ${outputStringRight}`,
+            value:
+              arrayToReadableString(rightSide) + `\n\n ${outputStringRight}`,
             inline: true,
           },
         ]);
 
-      await interaction.reply({
+      await interaction.editReply({
         embeds: [retEmbed],
       });
     } catch (error) {
-      await interaction.reply({
+      await interaction.editReply({
         content: "❌ " + error.toString(),
       });
       return;

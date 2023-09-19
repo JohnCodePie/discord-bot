@@ -15,14 +15,14 @@ module.exports = {
   async execute(interaction, client) {
     const givenID = interaction.options.data[0].value;
     const name = interaction.user.username;
-
+    await interaction.deferReply({ ephemeral: true });
     try {
       await GroupManager.addParticipant(givenID, name);
-      await interaction.reply({
+      await interaction.editReply({
         content: "Du bist der Party beigetreten! 🤙",
       });
     } catch (error) {
-      await interaction.reply({
+      await interaction.editReply({
         content: "❌ " + error.toString(),
       });
       return;

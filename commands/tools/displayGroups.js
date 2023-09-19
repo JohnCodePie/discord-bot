@@ -14,6 +14,7 @@ module.exports = {
 
   async execute(interaction, client) {
     const givenID = interaction.options.data[0].value;
+    await interaction.deferReply({ ephemeral: true });
     try {
       const participants = await GroupManager.getParticipantsByGroupID(givenID);
 
@@ -35,11 +36,11 @@ module.exports = {
           },
         ]);
 
-      await interaction.reply({
+      await interaction.editReply({
         embeds: [retEmbed],
       });
     } catch (error) {
-      await interaction.reply({
+      await interaction.editReply({
         content: "❌ " + error.toString(),
       });
       return;

@@ -7,6 +7,7 @@ module.exports = {
     .setDescription("Creates new Party."),
 
   async execute(interaction, client) {
+    await interaction.deferReply({ ephemeral: true });
     try {
       const group = await GroupManager.createGroup();
       const retEmbed = new EmbedBuilder()
@@ -22,13 +23,11 @@ module.exports = {
           name: interaction.user.tag,
         });
 
-      await interaction.reply({
+      await interaction.editReply({
         embeds: [retEmbed],
       });
     } catch (error) {
-      await interaction.reply({
-        content: "❌ " + error.toString(),
-      });
+      console.log(error);
       return;
     }
   },
