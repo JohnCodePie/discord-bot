@@ -7,7 +7,7 @@ module.exports = {
     .setDescription("Creates new Party."),
 
   async execute(interaction, client) {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply();
     try {
       const group = await GroupManager.createGroup();
       const retEmbed = new EmbedBuilder()

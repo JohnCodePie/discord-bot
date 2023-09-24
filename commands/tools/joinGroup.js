@@ -15,7 +15,7 @@ module.exports = {
   async execute(interaction, client) {
     const givenID = interaction.options.data[0].value;
     const name = interaction.user.username;
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply();
     try {
       await GroupManager.addParticipant(givenID, name);
       await interaction.editReply({

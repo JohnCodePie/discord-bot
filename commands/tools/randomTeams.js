@@ -31,7 +31,7 @@ module.exports = {
   async execute(interaction, client) {
     const givenID = interaction.options.data[0].value;
     const ultimateBravery = interaction.options.data[1].value;
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply();
     try {
       const group = await GroupManager.getGroupById(Number(givenID));
 

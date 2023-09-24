@@ -14,7 +14,7 @@ module.exports = {
 
   async execute(interaction, client) {
     const givenID = interaction.options.data[0].value;
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply();
     try {
       const participants = await GroupManager.getParticipantsByGroupID(givenID);
 
